@@ -11,6 +11,7 @@ export function HttpLoaderFactory(http: HttpClient, translateConfig: TranslateCo
 
 @NgModule({
   imports: [TranslateModule.forRoot()],
+  exports: [TranslateModule]
 })
 export class TranslateConfigModule {
   static forRoot(config: TranslateConfig): ModuleWithProviders {
