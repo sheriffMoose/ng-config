@@ -1,0 +1,10 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+      "feature": {
+          "description": "Generate a feature module in the project.",
+          "factory": "./feature/index#featureModule",
+          "schema": "./feature/schema.json"
+      }
+  }
+}
