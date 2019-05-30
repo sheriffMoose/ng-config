@@ -1,16 +1,13 @@
 {
-  "name": "schematics",
-  "version": "0.0.0",
-  "description": "A blank schematics",
+  "name": "@ng-config/schematics",
+  "version": "0.0.1",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "npm run build && jasmine src/**/*_spec.js"
+      "build": "tsc -p tsconfig.schematics.json",
+      "copy:schemas": "cp --parents schematics/*/schema.json ../../../dist/ng-config/",
+      "copy:files": "cp --parents -p schematics/*/files/** ../../../dist/ng-config/",
+      "copy:collection": "cp schematics/collection.json ../../../dist/ng-config/schematics/collection.json",
+      "postbuild": "npm run copy:schemas && npm run copy:files && npm run copy:collection"
   },
-  "keywords": [
-    "schematics"
-  ],
-  "author": "",
-  "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
     "@angular-devkit/core": "^8.0.0",
