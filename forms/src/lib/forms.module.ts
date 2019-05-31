@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
-import { FormsComponent } from './forms.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormlyModule, FORMLY_CONFIG, FormlyConfig } from '@ngx-formly/core';
+import { FormsConfig } from './forms.config';
 
 @NgModule({
-  declarations: [FormsComponent],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    FormlyModule.forRoot({})
   ],
-  exports: [FormsComponent]
+  providers:[
+    { provide: FORMLY_CONFIG, multi: true, useFactory: FormsConfig, deps: [FormlyConfig] },
+  ]
 })
-export class FormsModule { }
+export class FormsConfigModule { }
