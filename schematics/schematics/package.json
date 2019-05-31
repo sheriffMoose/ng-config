@@ -1,0 +1,11 @@
+{
+    "name": "@ng-config/schematics",
+    "version": "0.0.1",
+    "dependencies": {
+        "@angular-devkit/core": "^7.2.4",
+        "@angular-devkit/schematics": "^7.2.4",
+        "schematics-utilities": "^1.1.2",
+        "typescript": "^3.5.1"
+    },
+    "schematics": "./collection.json"
+}

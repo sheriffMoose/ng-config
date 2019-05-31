@@ -1,0 +1,25 @@
+import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+
+import { <%= classify(name) %>Component } from '../view/<%= dasherize(name) %>.component';
+import { <%= classify(name) %>Guard } from './<%= dasherize(name) %>.guard';
+import { <%= classify(name) %>Resolver } from './<%= dasherize(name) %>.resolver';
+
+const routes: Routes = [
+    {
+        path: '<%= dasherize(name) %>',
+        component: <%= classify(name) %>Component,
+        canActivate: [<%= classify(name) %>Guard],
+        resolve: {
+            data: <%= classify(name) %>Resolver
+        }
+    },
+
+];
+
+@NgModule({
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
+    providers:[<%= classify(name) %>Guard, <%= classify(name) %>Resolver]
+})
+export class <%= classify(name) %>RoutingModule { }

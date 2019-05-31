@@ -1,0 +1,13 @@
+import { NgModule } from '@angular/core';
+
+import { <%= classify(name) %>RoutingModule } from './route/<%= dasherize(name) %>.routing';
+import { <%= classify(name) %>Component } from './view/<%= dasherize(name) %>.component';
+import { <%= classify(name) %>Service } from './service/<%= dasherize(name) %>.service';
+
+@NgModule({
+    declarations: [<%= classify(name) %>Component],
+    imports: [<%= classify(name) %>RoutingModule],
+    exports: [<%= classify(name) %>Component],
+    providers: [<%= classify(name) %>Service],
+})
+export class <%= classify(name) %>Module {}

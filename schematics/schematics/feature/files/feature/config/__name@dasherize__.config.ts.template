@@ -1,0 +1,8 @@
+import { Injectable } from '@angular/core';
+import { <%= classify(name) %>Component } from '../view/<%= dasherize(name) %>.component';
+
+export class <%= classify(name) %>Config {
+
+    constructor(private component: <%= classify(name) %>Component) {}
+    
+}

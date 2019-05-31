@@ -1,0 +1,17 @@
+import { TestBed, async, inject } from '@angular/core/testing';
+import { <%= classify(name) %>Service } from './<%= dasherize(name) %>.service';
+
+describe('<%= classify(name) %>Service', () => {
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        <%= classify(name) %>Service
+      ],
+    }).compileComponents();
+  }));
+
+  it('should create', inject([<%= classify(name) %>Service], (service: <%= classify(name) %>Service) => {
+    expect(service).toBeTruthy();
+  }));
+});

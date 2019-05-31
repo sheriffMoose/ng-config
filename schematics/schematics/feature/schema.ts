@@ -2,6 +2,8 @@ export interface Schema {
     // The name of the feature.
     name: string;
 
+    // The root path of the feature.
+    rootPath?: string;
     // The path to create the feature.
     path?: string;
 

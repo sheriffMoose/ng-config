@@ -1,0 +1,10 @@
+export class <%= classify(name) %>Mocks {
+
+    static getData = {
+
+    };
+
+    static postData = {
+
+    };
+}
