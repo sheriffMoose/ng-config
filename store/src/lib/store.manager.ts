@@ -1,26 +1,37 @@
 import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { ReducerManager } from '@ngrx/store';
-import { StoreConfig } from './store.model';
+import { StoreConfig, StoreActions } from './store.model';
 
 export const STORE_CONFIG = new InjectionToken<StoreConfig[]>('STORE_CONFIG');
 export const STORE_OPTIONS = new InjectionToken<StoreConfig[]>('STORE_OPTIONS');
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class StoreManager {
   reducers = [];
+  initialStates = [];
   actions = {};
 
   constructor(private reducerManager: ReducerManager, @Inject(STORE_OPTIONS) private options) { }
 
-  addState(storeName, initialState?) {
+  addState(storeName, initialState?, useLocalStorage?) {
+    if (this.reducers.includes(storeName)) {
+      return;
+    }
     this.reducers.push(storeName);
+    this.initialStates.push({ storeName, initialState });
     this.reducerManager.addReducer(storeName, (state = initialState, action) => {
-      let newState = this.getLocalItem(storeName, initialState);
+      let newState = this.getLocalItem(storeName, initialState, useLocalStorage);
       if (action.store === storeName) {
-        if (action.type.endsWith('DATA_SUCCESS')) {
+        if (action.type.endsWith(StoreActions.SUCCESS)) {
           newState = {
             ...state,
             ...action.payload,
+            timestamp: action.timestamp,
+            isSuccessful: true
+          };
+        } else if (action.type.endsWith(StoreActions.UNSET)) {
+          newState = {
+            ...initialState,
             isSuccessful: true
           };
         } else {
@@ -30,7 +41,7 @@ export class StoreManager {
           };
         }
       }
-      if (this.options && this.options.useLocalStorage) {
+      if (this.options && this.options.useLocalStorage && useLocalStorage !== false) {
         localStorage.setItem(storeName, JSON.stringify(newState));
       }
       return newState;
@@ -47,19 +58,20 @@ export class StoreManager {
     this.actions[storeName][actionType].method = method;
   }
 
-  getAction(store, type, payload?, status = 'ACTION') {
+  getAction(store, type, payload?, status = StoreActions.ACTION, timestamp = Date.now()) {
     return {
       store,
       _type: type,
       type: `[${store}] ${type}_DATA_${status}`,
       service: ((this.actions[store] || {})[type] || {}).service,
       method: ((this.actions[store] || {})[type] || {}).method,
-      payload
+      payload,
+      timestamp
     };
   }
 
-  getLocalItem(storeName, payload) {
-    if (this.options.useLocalStorage) {
+  getLocalItem(storeName, payload, useLocalStorage?) {
+    if (this.options.useLocalStorage && useLocalStorage !== false) {
       const item = localStorage.getItem(storeName);
       return item === 'undefined' ? {} : JSON.parse(item) || payload || {};
     } else {

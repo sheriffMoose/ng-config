@@ -8,4 +8,14 @@ export interface StoreConfig {
         service: any;
         method: string;
     }[];
+    useLocalStorage?: boolean;
 };
+
+export enum StoreActions {
+    ACTION = 'ACTION',
+    GET = 'GET',
+    SET = 'SET',
+    UNSET = 'UNSET',
+    SUCCESS = 'SUCCESS',
+    ERROR = 'ERROR',
+}
